@@ -9,8 +9,8 @@
         "helmet": "^6.0.0"
     },
     "engines": {
-        "node": ">=10.13.0",
-        "npm": ">=6.4.1",
+        "node": "16.16.0",
+        "npm": "8.11.0",
         "yarn": ">=1.9.4"
     },
     "homepage": "https://github.com/subendu12345/sr-services-app",
