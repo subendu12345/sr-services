@@ -1,0 +1,203 @@
+<template>
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-account" title="Dealer">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Dealer</span>
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <a href="#" class="slds-card__header-link slds-truncate" title="Dealers">
+                            <span>Orders</span>
+                        </a>
+                    </h2>
+                </div>
+                <div class="slds-no-flex">
+                    <button onclick={handleOpenModal} class="slds-button slds-button_neutral">Add Order</button>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <table class="slds-max-medium-table_stacked slds-table slds-table_cell-buffer slds-table_bordered"
+                aria-labelledby="element-with-table-label other-element-with-table-label">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Delivered">Delivered</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Dealer Name">Dealer Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Shop Name">Shop Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Order Date">Order Date</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Order Items">Order Items</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Total Ammount">Total Ammount</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Total Paid">Total Paid</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Total Due">Total Due</div>
+                        </th>
+
+                        <!-- <th class="" scope="col">
+                            <div class="slds-truncate" title="Total Billing">Total Billing</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Total Due">Total Dueu</div>
+                        </th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <template if:true={orderDatas} for:each={orderDatas} for:item="o">
+                        <tr key={o._id} class="slds-hint-parent">
+                            <th data-label="Delivered" scope="row">
+                                <div class="slds-truncate" title="Delivered">
+                                    <a href="#" tabindex="-1">{o.Status}</a>
+                                </div>
+                            </th>
+                            <td data-label="Dealer Name">
+                                <div class="slds-truncate" title={o.DealerName}>{o.DealerName}</div>
+                            </td>
+                            <td data-label="Shop Name">
+                                <div class="slds-truncate" title={o.ShopName>{o.ShopName}</div>
+                            </td>
+                            <td data-label="Order Date">
+                                <div class="slds-truncate" title={o.OrderDate}>{o.OrderDate}</div>
+                            </td>
+                            <td data-label="Order Items">
+                                <div class="slds-truncate" title={o.ItemsName}>{o.ItemsName}</div>
+                            </td>
+                            <td data-label="Total Ammount">
+                                <div class="slds-truncate" title={o.TotalAmount>₹{o.TotalAmount}</div>
+                            </td>
+                            <td data-label="Total Paid">
+                                <div class="slds-truncate" title={o.TotalPaid}>₹{o.TotalPaid}</div>
+                            </td>
+                            <td data-label="Total Due">
+                                <div class="slds-truncate" title={o.DueAmount}>₹{o.DueAmount}</div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <div if:true={isShowModal} class="modal-class">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+                class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container" style="height: auto;">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Cancel and close</span>
+                    </button>
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">New Order Information</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element slds-p-around_x-small">
+                                    <label class="slds-form-element__label" for="select-01"><abbr class="slds-required" title="required">* </abbr>
+                                        Selet Delear Name</label>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-select_container">
+                                        <select onchange={handleDelerSelect} class="slds-select" id="select-01">
+                                            <option value="">Select Dealer..</option>
+                                            <template if:true={dealerDatas} for:each={dealerDatas} for:item="del">
+                                                <option key={del._id} value={del._id}>{del.DealerName}&nbsp;|&nbsp;{del.ShopName}</option>
+                                            </template>
+                                        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element slds-p-around_x-small">
+                                    <label class="slds-form-element__label" for="form-element-07">Order Date
+                                        <abbr class="slds-required" title="required">* </abbr>
+                                    </label>
+                                    <div class="slds-form-element__control">
+                                        <input type="Date" data-id="OrderDate" onchange={handleInput}
+                                            placeholder="Enter Shop Name..." class="slds-input" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element slds-p-around_x-small">
+                                    <label class="slds-form-element__label" for="form-element-02">Items Detail
+                                        <abbr class="slds-required" title="required">* </abbr>
+                                    </label>
+                                    <div class="slds-form-element__control">
+                                        <textarea data-id="ItemsName" onkeyup={handleInput} placeholder="Items Detail."
+                                            class="slds-input"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element slds-p-around_x-small">
+                                    <label class="slds-form-element__label" for="form-element-03">Total Amount</label>
+                                    <div class="slds-form-element__control">
+                                        <input type="number" onkeyup={handleInput} data-id="TotalAmount"
+                                            placeholder="Total Amount.." class="slds-input" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element slds-p-around_x-small">
+                                    <label class="slds-form-element__label" for="form-element-04">Total Paid</label>
+                                    <div class="slds-form-element__control">
+                                        <input type="number" onkeyup={handleInput} data-id="TotalPaid"
+                                            placeholder="Total Paid.." class="slds-input" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element slds-p-around_x-small">
+                                    <div class="slds-form-element__control">
+                                        <input onclick={handleInput} type="checkbox" checked={nweOrderObj.IsDelivered}
+                                            class="slds-iput " data-id="IsDelivered" />
+                                        <label class="slds-checkbox__label slds-p-left_x-small"
+                                            for="checkbox-unique-id-83">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-form-element__label">Is Order Delivered</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div if:true={nweOrderObj.IsDelivered}
+                                class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div class="slds-form-element slds-p-around_x-small">
+                                    <label class="slds-form-element__label" for="form-element-04">Delivered Date</label>
+                                    <div class="slds-form-element__control">
+                                        <input type="date" onchange={handleInput} data-id="DeliveredDate"
+                                            class="slds-input" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={handleOpenModal}
+                            aria-label="Cancel and close">Cancel</button>
+                        <button class="slds-button slds-button_brand" onclick={handleSaveData}>Save</button>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </div>
+    </article>
+</template>

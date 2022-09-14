@@ -22,11 +22,12 @@
                 </li>
                 <li class="slds-context-bar__item">
                     <a href="#" class="slds-context-bar__label-action" title="Home">
-                        <span class="slds-truncate" title="My Entry">My Entry</span>
+                        <span class="slds-truncate" onclick={handleOpenOrders} title="My Entry">Orders</span>
                     </a>
                 </li>
             </ul>
         </nav>
     </div>
     <my-dealerinfo if:true={isShowDealerTag}></my-dealerinfo>
+    <my-orders if:true={isShowOrdersTag}></my-orders>
 </template>
