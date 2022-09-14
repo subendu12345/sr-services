@@ -23,7 +23,7 @@
             </header>
         </div>
         <div class="slds-card__body slds-card__body_inner">
-            <table class="slds-table slds-table_cell-buffer slds-table_bordered"
+            <table class="slds-max-medium-table_stacked slds-table slds-table_cell-buffer slds-table_bordered"
                 aria-labelledby="element-with-table-label other-element-with-table-label">
                 <thead>
                     <tr class="slds-line-height_reset">
@@ -53,12 +53,12 @@
                 <tbody>
                     <template if:true={dealerDatas} for:each={dealerDatas} for:item="del">
                         <tr key={del._id} class="slds-hint-parent">
-                            <th data-label="Opportunity Name" scope="row">
+                            <th data-label="Dealer Name" scope="row">
                                 <div class="slds-truncate" title={del.DealerName}>
                                     <a href="#" tabindex="-1">{del.DealerName}</a>
                                 </div>
                             </th>
-                            <td data-label="Account Name">
+                            <td data-label="Shop Name">
                                 <div class="slds-truncate" title={del.ShopName}>{del.ShopName}</div>
                             </td>
                             <td data-label="Close Date">
@@ -143,7 +143,7 @@
                 </div>
             </div>
             <div class="slds-modal__footer">
-                <button class="slds-button slds-button_neutral" aria-label="Cancel and close">Cancel</button>
+                <button class="slds-button slds-button_neutral" onclick={handleOpenModal} aria-label="Cancel and close">Cancel</button>
                 <button class="slds-button slds-button_brand" onclick={handleSaveData}>Save</button>
             </div>
         </div>
