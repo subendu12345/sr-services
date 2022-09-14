@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const dealerTemplateCopy = require('../models/DealerModel')
 const orderTemplateCopy = require('../models/OrderModel')
+const userTemplateCopy = require('../models/UserModel')
 
 router.post('/signup',(req, res)=>{
     if(req.body){
@@ -13,6 +14,24 @@ router.post('/signup',(req, res)=>{
             PhoneNumber : req.body.DealerPhoneNumber || ''
         })
         signupDealer.save()
+        .then(data=>{
+            res.send(data)
+        }).catch(err=>{
+            console.log('data from err  ', err);
+            res.send(err)
+        })
+    } 
+})
+
+router.post('/create-user',(req, res)=>{
+    if(req.body){
+        const signupNewUser = new userTemplateCopy({
+           FullName : req.body.FullName,
+           Email : req.body.Email,
+           UserName : req.body.UserName,
+           Password : req.body.Password
+        })
+        signupNewUser.save()
         .then(data=>{
             res.send(data)
         }).catch(err=>{
@@ -52,6 +71,18 @@ router.get('/dealer', function(req, res) {
         }
     })
 });
+
+router.get('/get-user', function(req, res) {
+    userTemplateCopy.find({UserName : req.query.username, Password : req.query.password}, (err, user)=>{
+        if (!err) {
+            res.send(user)
+        } else {
+            console.log('Failed to retrieve user List: ' + err);
+        }
+    })
+    console.log('req ', req.query);
+})
+
 
 router.get('/get-orders', function(req, res) {
     orderTemplateCopy.find({}, (err, orders)=>{

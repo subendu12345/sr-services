@@ -9,7 +9,7 @@
             </div>
         </div>
         <nav class="slds-context-bar__secondary" role="navigation">
-            <ul class="slds-grid">
+            <ul class="slds-grid" if:true={isLoggedinuser}>
                 <li class="slds-context-bar__item">
                     <a href="#" class="slds-context-bar__label-action" title="Home">
                         <span class="slds-truncate" onclick={handleOpenHome} title="Home">Home</span>
@@ -17,17 +17,144 @@
                 </li>
                 <li class="slds-context-bar__item">
                     <a href="#" class="slds-context-bar__label-action" title="Home">
-                        <span class="slds-truncate" onclick={handleOpenDealerInfo} title="Dealer Info">Dealer Info</span>
+                        <span class="slds-truncate" onclick={handleOpenDealerInfo} title="Dealer Info">Dealer
+                            Info</span>
                     </a>
                 </li>
                 <li class="slds-context-bar__item">
                     <a href="#" class="slds-context-bar__label-action" title="Home">
-                        <span class="slds-truncate" onclick={handleOpenOrders} title="My Entry">Orders</span>
+                        <span class="slds-truncate" onclick={handleOpenOrders} title="My Orders">My Orders</span>
                     </a>
                 </li>
             </ul>
+            <ul if:false={isLoggedinuser} class="slds-grid">
+                <li class="slds-context-bar__item">
+                    <a href="#" class="slds-context-bar__label-action" title="Login">
+                        <span class="slds-truncate" onclick={handleLogin} title="Login">Login</span>
+                    </a>
+                </li>
+            </ul>
+            
         </nav>
     </div>
     <my-dealerinfo if:true={isShowDealerTag}></my-dealerinfo>
     <my-orders if:true={isShowOrdersTag}></my-orders>
+
+
+    <div if:true={isShowLoginRegTag} class="modal-class">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container" style="height: auto;">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Login</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="slds-form-element slds-p-around_x-small">
+                                <label class="slds-form-element__label" for="select-01"><abbr class="slds-required"
+                                        title="required">* </abbr>
+                                    UserName</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" data-id="UserName" onchange={handleInputForLogin}
+                                        placeholder="Enter User Name..." class="slds-input" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="slds-form-element slds-p-around_x-small">
+                                <label class="slds-form-element__label" for="form-element-07">Password
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <input type="password" data-id="Password" onchange={handleInputForLogin}
+                                        placeholder="Enter Password..." class="slds-input" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <a title="Don't have account signup here" href="#"  class="slds-p-right_x-small" onclick={handleOpenSighupModal}>Signup here</a>
+                    <button class="slds-button slds-button_neutral" onclick={handleOpenModal}
+                        aria-label="Cancel and close">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleLoginUser}>Login</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </div>
+    
+    <div if:true={isShowSignupTag} class="modal-class">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container" style="height: auto;">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate">Signup you account</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-13">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="slds-form-element slds-p-around_x-small">
+                                <label class="slds-form-element__label" for="form-element-01">Full Name
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" data-id="FullName" onkeyup={handleInput} placeholder="Enter Full Name.." class="slds-input" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="slds-form-element slds-p-around_x-small">
+                                <label class="slds-form-element__label" for="form-element-07">
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                    User Name
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" data-id="UserName" onkeyup={handleInput} placeholder="Enter User Name..." class="slds-input" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="slds-form-element slds-p-around_x-small">
+                                <label class="slds-form-element__label" for="form-element-02">Email
+                                    <abbr class="slds-required" title="required">* </abbr>
+                                </label>
+                                <div class="slds-form-element__control">
+                                    <input type="email" data-id="Email" onkeyup={handleInput} placeholder="Enter Email Address." class="slds-input"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div class="slds-form-element slds-p-around_x-small">
+                                <label class="slds-form-element__label" for="form-element-03">Password</label>
+                                <div class="slds-form-element__control">
+                                    <input type="password" onkeyup={handleInput} data-id="Password" placeholder="Enter Password.."
+                                        class="slds-input" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={handleOpenSighupModal}
+                        aria-label="Cancel and close">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleSignupUser}>Sighup</button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </div>
 </template>
